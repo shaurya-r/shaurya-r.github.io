@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shaurya Portfolio</title>
-  
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --bg: #f4f4f4;
@@ -20,10 +17,11 @@
       --topbar-hover: #00aaff;
       --footer-bg: #222;
       --footer-text: #aaa;
+      --grid-color: rgba(0, 255, 0, 0.07);
     }
 
     [data-theme="dark"] {
-      --bg: #121212;
+      --bg: #0b0b0b;
       --text: #eee;
       --accent: #4da3ff;
       --header-bg: #1e1e1e;
@@ -33,6 +31,7 @@
       --topbar-hover: #00ccff;
       --footer-bg: #000;
       --footer-text: #777;
+      --grid-color: rgba(0, 255, 100, 0.08);
     }
 
     html {
@@ -44,8 +43,45 @@
       font-family: 'Space Grotesk', sans-serif;
       background-color: var(--bg);
       color: var(--text);
+      position: relative;
+      overflow-x: hidden;
     }
 
+    /* Hacker grid background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: -2;
+    }
+
+    /* Floating blobs */
+    body::after {
+      content: "";
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      top: -150px;
+      left: -150px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.15;
+      z-index: -1;
+      animation: float 25s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(50px); }
+    }
+
+    /* Top Bar */
     .top-bar {
       background-color: var(--topbar-bg);
       position: sticky;
@@ -69,7 +105,6 @@
       text-decoration: none;
       margin-left: 20px;
       font-weight: 600;
-      position: relative;
       transition: color 0.3s ease;
     }
 
@@ -77,21 +112,7 @@
       color: var(--topbar-hover);
     }
 
-    .top-bar nav a::after {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      left: 0;
-      bottom: -4px;
-      background: var(--topbar-hover);
-      transition: width 0.3s ease;
-    }
-
-    .top-bar nav a:hover::after {
-      width: 100%;
-    }
-
+    /* Theme Toggle */
     label.theme-switch {
       display: flex;
       align-items: center;
@@ -154,23 +175,7 @@
     h2 {
       color: var(--text);
       margin-top: 0;
-      position: relative;
       font-weight: 600;
-    }
-
-    h2::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 4px;
-      background: var(--accent);
-      margin-top: 8px;
-      border-radius: 2px;
-      transition: width 0.3s ease-in-out;
-    }
-
-    h2:hover::after {
-      width: 100px;
     }
 
     .links a {
@@ -178,23 +183,6 @@
       color: var(--accent);
       text-decoration: none;
       font-weight: 600;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .links a::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      bottom: 0;
-      left: -100%;
-      background-color: var(--accent);
-      transition: left 0.3s ease;
-    }
-
-    .links a:hover::before {
-      left: 0;
     }
 
     footer {
@@ -235,11 +223,11 @@
       <a href="#links">Links</a>
     </nav>
     <label class="theme-switch">
-      <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" />
-      <span class="slider">
+      <input type="checkbox" id="theme-toggle">
+      <div class="slider">
         <span class="icon sun">☀️</span>
         <span class="icon moon">🌙</span>
-      </span>
+      </div>
     </label>
   </div>
 
@@ -261,7 +249,7 @@
 
   <section id="community">
     <h2>Community Work</h2>
-    <p>List any volunteering, outreach, or educational contributions.</p>
+    <p>List any volunteering, outreach, or educational contributions. </p>
   </section>
 
   <section id="experience">
@@ -288,41 +276,30 @@
     &copy; 2025 Shaurya Raghuvanshi
   </footer>
 
-  <!-- Scroll Reveal + Theme Toggle Script -->
+  <!-- Script for Theme -->
   <script>
-    // Reveal on scroll
-    const sections = document.querySelectorAll("section");
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-      sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < triggerBottom) {
-          sec.classList.add("show");
-        }
-      });
-    };
+    const toggle = document.getElementById("theme-toggle");
+    const html = document.documentElement;
 
-    window.addEventListener("scroll", revealOnScroll);
-    window.addEventListener("load", revealOnScroll);
+    toggle.addEventListener("change", () => {
+      html.setAttribute("data-theme", toggle.checked ? "dark" : "light");
+    });
 
-    // Theme toggle
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute("data-theme");
-      const newTheme = current === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-    }
+    // Optional: Scroll animation
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-    // Load saved theme on startup
-    window.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        document.getElementById("theme-toggle").checked = savedTheme === "dark";
-      }
+    document.querySelectorAll("section").forEach(section => {
+      observer.observe(section);
     });
   </script>
-
 </body>
 </html>
