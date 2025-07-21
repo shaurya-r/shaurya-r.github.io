@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shaurya Portfolio</title>
   <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #333;
+      --accent: #007acc;
+      --header-bg: #222;
+      --header-text: #fff;
+      --topbar-bg: #111;
+      --topbar-link: #fff;
+      --topbar-hover: #00aaff;
+      --footer-bg: #222;
+      --footer-text: #aaa;
+    }
+
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #eee;
+      --accent: #4da3ff;
+      --header-bg: #1e1e1e;
+      --header-text: #fff;
+      --topbar-bg: #000;
+      --topbar-link: #fff;
+      --topbar-hover: #00ccff;
+      --footer-bg: #000;
+      --footer-text: #777;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -12,13 +38,12 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text);
     }
 
-    /* Top Bar with Name + Nav */
     .top-bar {
-      background-color: #111;
+      background-color: var(--topbar-bg);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -30,13 +55,13 @@
     }
 
     .top-bar .name {
-      color: #fff;
+      color: var(--topbar-link);
       font-size: 1.2rem;
       font-weight: bold;
     }
 
     .top-bar nav a {
-      color: #fff;
+      color: var(--topbar-link);
       text-decoration: none;
       margin-left: 20px;
       font-weight: bold;
@@ -45,7 +70,7 @@
     }
 
     .top-bar nav a:hover {
-      color: #00aaff;
+      color: var(--topbar-hover);
     }
 
     .top-bar nav a::after {
@@ -55,7 +80,7 @@
       height: 2px;
       left: 0;
       bottom: -4px;
-      background: #00aaff;
+      background: var(--topbar-hover);
       transition: width 0.3s ease;
     }
 
@@ -63,9 +88,20 @@
       width: 100%;
     }
 
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--topbar-link);
+      color: var(--topbar-link);
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      margin-left: auto;
+    }
+
     header {
-      background: #222;
-      color: #fff;
+      background: var(--header-bg);
+      color: var(--header-text);
       text-align: center;
       padding: 60px 20px 40px;
     }
@@ -90,13 +126,13 @@
     }
 
     h2 {
-      color: #222;
+      color: var(--text);
       margin-top: 0;
     }
 
     .links a {
       margin-right: 15px;
-      color: #007acc;
+      color: var(--accent);
       text-decoration: none;
       font-weight: bold;
       position: relative;
@@ -109,7 +145,7 @@
       height: 2px;
       left: 0;
       bottom: -4px;
-      background: #007acc;
+      background: var(--accent);
       transition: width 0.3s ease;
     }
 
@@ -118,8 +154,8 @@
     }
 
     footer {
-      background: #222;
-      color: #aaa;
+      background: var(--footer-bg);
+      color: var(--footer-text);
       text-align: center;
       padding: 20px;
       font-size: 0.9rem;
@@ -133,6 +169,10 @@
 
       .top-bar nav a {
         margin: 10px 10px 0 0;
+      }
+
+      .theme-toggle {
+        margin-top: 10px;
       }
     }
   </style>
@@ -150,6 +190,7 @@
       <a href="#personality">Personality</a>
       <a href="#links">Links</a>
     </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
   </div>
 
   <!-- Header -->
@@ -197,10 +238,10 @@
     &copy; 2025 Shaurya Raghuvanshi
   </footer>
 
-  <!-- JS Scroll Reveal -->
+  <!-- Scroll Reveal + Theme Toggle Script -->
   <script>
+    // Reveal on scroll
     const sections = document.querySelectorAll("section");
-
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
       sections.forEach(sec => {
@@ -213,6 +254,23 @@
 
     window.addEventListener("scroll", revealOnScroll);
     window.addEventListener("load", revealOnScroll);
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme");
+      const newTheme = current === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    }
+
+    // Load saved theme on startup
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      }
+    });
   </script>
 
 </body>
