@@ -40,11 +40,27 @@
       text-decoration: none;
       margin-left: 20px;
       font-weight: bold;
+      position: relative;
       transition: color 0.3s ease;
     }
 
     .top-bar nav a:hover {
       color: #00aaff;
+    }
+
+    .top-bar nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background: #00aaff;
+      transition: width 0.3s ease;
+    }
+
+    .top-bar nav a:hover::after {
+      width: 100%;
     }
 
     header {
@@ -55,7 +71,7 @@
     }
 
     header p {
-      font-size: 1.2rem;
+      font-size: 1.6rem;
       margin-top: 0;
     }
 
@@ -63,6 +79,14 @@
       padding: 50px 20px;
       max-width: 800px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
@@ -74,6 +98,23 @@
       margin-right: 15px;
       color: #007acc;
       text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background: #007acc;
+      transition: width 0.3s ease;
+    }
+
+    .links a:hover::after {
+      width: 100%;
     }
 
     footer {
@@ -129,7 +170,7 @@
 
   <section id="community">
     <h2>Community Work</h2>
-    <p>List any volunteering, outreach, or educational contributions. </p>
+    <p>List any volunteering, outreach, or educational contributions.</p>
   </section>
 
   <section id="experience">
@@ -155,6 +196,24 @@
   <footer>
     &copy; 2025 Shaurya Raghuvanshi
   </footer>
+
+  <!-- JS Scroll Reveal -->
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < triggerBottom) {
+          sec.classList.add("show");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+  </script>
 
 </body>
 </html>
