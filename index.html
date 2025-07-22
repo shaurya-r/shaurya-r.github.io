@@ -157,7 +157,7 @@
       background: var(--header-bg);
       color: var(--header-text);
       text-align: center;
-      padding: 60px 20px 100px;
+      padding: 80px 20px 100px;
       font-family: 'Courier New', Courier, monospace;
       position: relative;
       overflow: visible;
@@ -171,22 +171,13 @@
       border-right: 3px solid var(--terminal-glow);
       padding-right: 5px;
       overflow: hidden;
-      margin: 0 auto 20px;
+      margin: 0 auto;
       width: fit-content;
       max-width: 100%;
     }
     #typed-welcome {
-      border-right: none; /* will add cursor via JS */
       margin-top: 30px;
-    }
-    #name-highlight {
-      font-size: 2.3rem;
-      font-weight: 900;
-      margin-top: 0;
-      user-select: none;
-      color: var(--accent);
-      font-family: 'Space Grotesk', sans-serif;
-      letter-spacing: 3px;
+      border-right: 3px solid var(--terminal-glow);
     }
 
     section {
@@ -241,10 +232,6 @@
       }
       label.theme-switch {
         margin-top: 10px;
-      }
-      #name-highlight {
-        font-size: 1.8rem;
-        letter-spacing: 2px;
       }
     }
   </style>
@@ -370,7 +357,6 @@
     }
 
     function typeWelcome() {
-      // add cursor border to welcome
       typedWelcomeEl.style.borderRight = "3px solid var(--terminal-glow)";
       if (welcomeIndex <= welcomeText.length) {
         typedWelcomeEl.textContent = welcomeText.slice(0, welcomeIndex);
