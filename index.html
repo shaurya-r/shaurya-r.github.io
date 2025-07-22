@@ -4,32 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shaurya Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fff;
-      --text: #111;
-      --accent: #E48226;
-      --header-bg: #f7f7f7;
-      --topbar-bg: #111;
-      --topbar-link: #fff;
-      --topbar-hover: #E48226;
-      --footer-bg: #111;
-      --footer-text: #aaa;
-      --grid: rgba(0, 0, 0, 0.05);
+      --primary: #E48226;
+      --bg: #f4f4f4;
+      --text: #222;
+      --grid-color: rgba(0, 0, 0, 0.05);
     }
 
     [data-theme="dark"] {
-      --bg: #0f0f0f;
-      --text: #f0f0f0;
-      --accent: #E48226;
-      --header-bg: #1a1a1a;
-      --topbar-bg: #000;
-      --topbar-link: #fff;
-      --topbar-hover: #E48226;
-      --footer-bg: #000;
-      --footer-text: #666;
-      --grid: rgba(255, 255, 255, 0.05);
+      --bg: #111;
+      --text: #eee;
+      --grid-color: rgba(255, 255, 255, 0.03);
     }
 
     html {
@@ -38,15 +25,15 @@
 
     body {
       margin: 0;
-      font-family: 'Share Tech Mono', monospace;
-      background-color: var(--bg);
+      font-family: 'Fira Code', monospace;
+      background: var(--bg);
       color: var(--text);
-      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 40px 40px;
+      position: relative;
+      overflow-x: hidden;
     }
 
     .top-bar {
-      background-color: var(--topbar-bg);
+      background-color: var(--bg);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -54,17 +41,18 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid var(--grid-color);
     }
 
     .top-bar .name {
-      color: var(--topbar-link);
-      font-size: 1.2rem;
       font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-family: 'Orbitron', sans-serif;
     }
 
     .top-bar nav a {
-      color: var(--topbar-link);
+      color: var(--text);
       text-decoration: none;
       margin-left: 20px;
       font-weight: bold;
@@ -73,26 +61,13 @@
     }
 
     .top-bar nav a:hover {
-      color: var(--topbar-hover);
-    }
-
-    .top-bar nav a::after {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      left: 0;
-      bottom: -4px;
-      background: var(--topbar-hover);
-      transition: width 0.3s ease;
-    }
-
-    .top-bar nav a:hover::after {
-      width: 100%;
+      color: var(--primary);
     }
 
     .theme-switch {
       margin-left: auto;
+      display: flex;
+      align-items: center;
       cursor: pointer;
     }
 
@@ -102,60 +77,81 @@
 
     .slider {
       display: flex;
-      align-items: center;
       gap: 5px;
-      font-size: 1.2rem;
-      color: var(--topbar-link);
+      padding: 6px 10px;
+      background: none;
+      border: 1px solid var(--text);
+      border-radius: 15px;
+      font-size: 1rem;
     }
 
-    /* Intro */
     .intro {
       height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: var(--header-bg);
-      color: var(--text);
-      padding: 20px;
+      position: relative;
       text-align: center;
+      z-index: 1;
     }
 
-    .intro h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      white-space: nowrap;
-    }
-
-    .intro .profile-pic {
-      width: 200px;
-      height: 200px;
+    .intro img {
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-fit: cover;
-      margin: 20px 0;
-      border: 4px solid var(--accent);
+      border: 3px solid var(--primary);
+      margin-bottom: 20px;
     }
 
-    .intro .typed-text {
-      border-right: 2px solid var(--text);
+    .typewriter {
       font-size: 1.5rem;
       white-space: nowrap;
       overflow: hidden;
+      border-right: 2px solid var(--primary);
       width: 0;
-      animation: typing 2s steps(30, end) forwards, blink 0.7s step-end infinite;
+      animation: typing 2.5s steps(30, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    .typewriter2 {
+      font-size: 1.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid var(--primary);
+      width: 0;
+      animation: typing2 2s 3s steps(30, end) forwards, blink 0.75s step-end infinite;
     }
 
     @keyframes typing {
       from { width: 0; }
-      to { width: 22ch; }
+      to { width: 260px; }
+    }
+
+    @keyframes typing2 {
+      from { width: 0; }
+      to { width: 320px; }
     }
 
     @keyframes blink {
       50% { border-color: transparent; }
     }
 
+    .background-grid::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     section {
-      padding: 50px 20px;
+      padding: 80px 20px;
       max-width: 800px;
       margin: auto;
       opacity: 0;
@@ -169,74 +165,58 @@
     }
 
     h2 {
-      color: var(--text);
-      margin-top: 0;
-    }
-
-    .links a {
-      margin-right: 15px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-      position: relative;
-    }
-
-    .links a:hover::after {
-      width: 100%;
+      color: var(--primary);
     }
 
     footer {
-      background: var(--footer-bg);
-      color: var(--footer-text);
       text-align: center;
       padding: 20px;
+      color: var(--text);
       font-size: 0.9rem;
     }
 
-    @media (max-width: 700px) {
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
+    @media (max-width: 600px) {
+      .intro img {
+        width: 120px;
+        height: 120px;
       }
 
-      .top-bar nav a {
-        margin: 10px 10px 0 0;
+      .typewriter, .typewriter2 {
+        font-size: 1.1rem;
       }
     }
   </style>
 </head>
-<body>
+<body class="background-grid">
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="name">Portfolio</div>
+    <div class="name">Shaurya</div>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
-      <a href="#community">Community</a>
       <a href="#experience">Experience</a>
-      <a href="#personality">Personality</a>
-      <a href="#links">Links</a>
     </nav>
     <label class="theme-switch">
       <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" />
       <span class="slider">
-        <span class="sun">☀️</span>
-        <span class="moon">🌙</span>
+        <span>☀️</span>
+        <span>🌙</span>
       </span>
     </label>
   </div>
 
-  <!-- Intro Section -->
-  <div class="intro">
-    <h1 class="typed-text" id="typed"></h1>
-    <img src="https://via.placeholder.com/200" alt="Shaurya" class="profile-pic" />
-  </div>
+  <!-- Intro -->
+  <section class="intro">
+    <img src="https://via.placeholder.com/180" alt="Profile Picture">
+    <div class="typewriter">My name is Shaurya Raghuvanshi</div>
+    <div class="typewriter2">Welcome to my portfolio</div>
+  </section>
 
-  <!-- Sections -->
+  <!-- Content -->
   <section id="about">
-    <h2>About Me</h2>
-    <p>Passionate about computers.</p>
+    <h2>About</h2>
+    <p>I’m passionate about computers and technology.</p>
   </section>
 
   <section id="projects">
@@ -244,28 +224,9 @@
     <p>Coming soon!</p>
   </section>
 
-  <section id="community">
-    <h2>Community Work</h2>
-    <p>Volunteering, outreach, or educational contributions.</p>
-  </section>
-
   <section id="experience">
     <h2>Experience</h2>
-    <p>Young Engineers</p>
-  </section>
-
-  <section id="personality">
-    <h2>Personality</h2>
-    <p>Hobbies, mindset, values, or even a short story that shows who you are beyond the resume.</p>
-  </section>
-
-  <section id="links">
-    <h2>Links</h2>
-    <div class="links">
-      <a href="https://github.com/shaurya-r" target="_blank">GitHub</a>
-      <a href="https://linkedin.com/in/shauryar" target="_blank">LinkedIn</a>
-      <a href="mailto:Shaurya.raghuvanshi.3926@gmail.com">Email</a>
-    </div>
+    <p>Young Engineers, Outreach, and more.</p>
   </section>
 
   <footer>
@@ -274,43 +235,8 @@
 
   <!-- Scripts -->
   <script>
-    const lines = ["My name is Shaurya Raghuvanshi", "Welcome to my portfolio"];
-    let index = 0;
-    let charIndex = 0;
-    const typed = document.getElementById("typed");
-
-    function typeLine() {
-      if (index < lines.length) {
-        if (charIndex < lines[index].length) {
-          typed.textContent += lines[index].charAt(charIndex);
-          charIndex++;
-          setTimeout(typeLine, 60);
-        } else {
-          index++;
-          charIndex = 0;
-          setTimeout(() => {
-            typed.textContent = "";
-            typeLine();
-          }, 1500);
-        }
-      }
-    }
-
-    window.addEventListener("load", () => {
-      typeLine();
-      setTimeout(() => {
-        document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
-      }, 4500);
-    });
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      html.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-    }
-
-    const sections = document.querySelectorAll("section");
+    // Scroll reveal
+    const sections = document.querySelectorAll("section:not(.intro)");
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
       sections.forEach(sec => {
@@ -320,18 +246,30 @@
         }
       });
     };
-
     window.addEventListener("scroll", revealOnScroll);
     window.addEventListener("load", revealOnScroll);
 
-    // Load theme on startup
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme");
+      const newTheme = current === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) {
         document.documentElement.setAttribute("data-theme", savedTheme);
+        document.getElementById("theme-toggle").checked = savedTheme === "dark";
       }
+
+      // Scroll to about after 6 seconds
+      setTimeout(() => {
+        document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
+      }, 6000);
     });
   </script>
-
 </body>
 </html>
