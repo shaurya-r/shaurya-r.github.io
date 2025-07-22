@@ -159,7 +159,7 @@
       opacity: 0.3;
     }
 
-    /* ===== Header with Terminal Style Text ===== */
+    /* ===== Header with Typed Text ===== */
     header {
       background: var(--header-bg);
       color: var(--header-text);
@@ -169,23 +169,18 @@
       position: relative;
       overflow: visible;
     }
-    header p {
+    header p#typed-name {
       font-size: 1.9rem;
       font-weight: 700;
       letter-spacing: 2px;
-      margin: 0 auto;
-      max-width: 600px;
       white-space: nowrap;
-      border-right: 3px solid var(--terminal-glow);
-      animation: typing 3s steps(28) 1 forwards, blink 0.8s step-end infinite;
       user-select: none;
-    }
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-    @keyframes blink {
-      50% { border-color: transparent }
+      border-right: 3px solid var(--terminal-glow);
+      padding-right: 5px;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 0 auto;
+      width: fit-content;
     }
 
     /* ===== Sections ===== */
@@ -272,7 +267,7 @@
 
   <!-- Header -->
   <header>
-    <p>Shaurya Raghuvanshi</p>
+    <p id="typed-name"></p>
   </header>
 
   <!-- Sections -->
@@ -317,6 +312,7 @@
 
   <!-- Script -->
   <script>
+    // Theme toggle
     const toggle = document.getElementById("theme-toggle");
     const html = document.documentElement;
 
@@ -346,6 +342,34 @@
     );
     document.querySelectorAll("section").forEach(section => {
       observer.observe(section);
+    });
+
+    // Typed letter-by-letter animation for header name
+    const typedNameEl = document.getElementById("typed-name");
+    const nameText = "Shaurya Raghuvanshi";
+    let index = 0;
+
+    function typeLetter() {
+      if (index <= nameText.length) {
+        typedNameEl.textContent = nameText.slice(0, index);
+        index++;
+        setTimeout(typeLetter, 150); // typing speed in ms per letter
+      } else {
+        blinkCursor();
+      }
+    }
+
+    function blinkCursor() {
+      let visible = true;
+      setInterval(() => {
+        typedNameEl.style.borderRight = visible ? "none" : "3px solid var(--terminal-glow)";
+        visible = !visible;
+      }, 600);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      typedNameEl.textContent = "";
+      typeLetter();
     });
   </script>
 </body>
