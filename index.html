@@ -86,11 +86,15 @@
       text-decoration: none;
       margin: 0 15px;
       font-weight: bold;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, transform 0.2s;
     }
 
     .top-bar nav a:hover {
       color: var(--topbar-hover);
+    }
+
+    .top-bar nav a:active {
+      transform: scale(0.9);
     }
 
     .theme-switch {
@@ -98,6 +102,15 @@
       display: flex;
       align-items: center;
       color: var(--topbar-link);
+      border: 2px solid transparent;
+      border-radius: 5px;
+      padding: 5px;
+      transition: border-color 0.2s;
+    }
+
+    .theme-switch:active {
+      border-color: var(--accent);
+      transform: scale(0.95);
     }
 
     .theme-switch input {
@@ -188,7 +201,7 @@
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="title" id="portfolio-title">Portfolio</div>
+    <div class="title" id="portfolio-title"><a href="#home" style="color: inherit; text-decoration: none;">Portfolio</a></div>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
