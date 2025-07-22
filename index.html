@@ -153,7 +153,7 @@
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="name">Shaurya's Portfolio</div>
+    <div class="name"><a href="#home" style="color: var(--topbar-link); text-decoration: none;">Shaurya's Portfolio</a></div>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -172,7 +172,7 @@
   </div>
 
   <!-- Intro Section -->
-  <div class="intro">
+  <div class="intro" id="home">
     <img src="https://via.placeholder.com/300" alt="Shaurya" class="profile-pic" />
     <div class="typed-text" id="typed"></div>
   </div>
@@ -245,7 +245,7 @@
         }
       } else {
         // After typing all lines, keep both lines displayed
-        typed.textContent = lines.join('\n'); // Display both lines
+        typed.textContent = lines[0] + '\n' + lines[1]; // Display both lines
       }
     }
 
