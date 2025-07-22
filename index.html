@@ -61,7 +61,7 @@
       font-size: 2rem;
       color: var(--accent);
       text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent);
-      animation: glow 1.5s infinite alternate;
+      animation: glow 1.5s infinite alternate, pulse 1s infinite alternate;
       cursor: pointer;
       transition: transform 0.2s, text-shadow 0.2s;
     }
@@ -72,6 +72,18 @@
       }
       to {
         text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
       }
     }
 
@@ -210,6 +222,7 @@
       background: red;
       border-radius: 50%;
       display: none; /* Initially hidden */
+      transition: transform 1s ease-in-out;
     }
 
     .flame {
@@ -336,41 +349,26 @@
 
     document.getElementById("portfolio-title").addEventListener("click", function() {
       const rocket = document.getElementById("rocket");
-      const flame1 = document.getElementById("flame1");
-      const flame2 = document.getElementById("flame2");
       const navMenu = document.getElementById("nav-menu");
 
       // Hide navigation menu
       navMenu.classList.add("hidden");
 
-      // Show rocket and flames
+      // Show rocket
       rocket.style.display = "block";
-      flame1.style.display = "block";
-      flame2.style.display = "block";
-
-      // Set initial position of rocket and flames
       rocket.style.left = "50%";
       rocket.style.top = "50%";
-      flame1.style.left = "45%";
-      flame1.style.top = "55%";
-      flame2.style.left = "55%";
-      flame2.style.top = "55%";
+      rocket.style.transform = "translate(-50%, -50%)";
 
       // Animate rocket to the right
       setTimeout(() => {
         rocket.style.transition = "transform 1s ease-in-out";
         rocket.style.transform = "translate(100vw, -50%)"; // Move to the right
-        flame1.style.transition = "transform 1s ease-in-out";
-        flame1.style.transform = "translate(100vw, -50%)"; // Move flames with rocket
-        flame2.style.transition = "transform 1s ease-in-out";
-        flame2.style.transform = "translate(100vw, -50%)"; // Move flames with rocket
       }, 100);
 
       // Reset after animation
       setTimeout(() => {
         rocket.style.display = "none"; // Hide rocket
-        flame1.style.display = "none"; // Hide flames
-        flame2.style.display = "none"; // Hide flames
         navMenu.classList.remove("hidden"); // Show navigation menu
       }, 1100); // Match with the duration of the rocket animation
     });
@@ -388,7 +386,7 @@
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) {
         document.documentElement.setAttribute("data-theme", savedTheme);
-        document.getElementById("theme-label").textContent = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
+        document.getElementById("theme-label").textContent = savedTheme.charAt(0).toUpperCase() + newTheme.slice(1);
       }
     });
   </script>
