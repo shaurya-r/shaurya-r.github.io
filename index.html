@@ -56,7 +56,6 @@
       text-decoration: none;
       margin-left: 20px;
       font-weight: bold;
-      position: relative;
       transition: color 0.3s ease;
     }
 
@@ -105,32 +104,30 @@
       margin-bottom: 20px;
     }
 
-    .typewriter {
+    .typewriter, .typewriter2 {
       font-size: 1.5rem;
       white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid var(--primary);
       width: 0;
+    }
+
+    .typewriter {
       animation: typing 2.5s steps(30, end) forwards, blink 0.75s step-end infinite;
     }
 
     .typewriter2 {
-      font-size: 1.2rem;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid var(--primary);
-      width: 0;
       animation: typing2 2s 3s steps(30, end) forwards, blink 0.75s step-end infinite;
     }
 
     @keyframes typing {
       from { width: 0; }
-      to { width: 260px; }
+      to { width: 300px; }
     }
 
     @keyframes typing2 {
       from { width: 0; }
-      to { width: 320px; }
+      to { width: 340px; }
     }
 
     @keyframes blink {
@@ -182,14 +179,14 @@
       }
 
       .typewriter, .typewriter2 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
     }
   </style>
 </head>
 <body class="background-grid">
 
-  <!-- Top Bar -->
+  <!-- Navigation -->
   <div class="top-bar">
     <div class="name">Shaurya</div>
     <nav>
@@ -206,14 +203,14 @@
     </label>
   </div>
 
-  <!-- Intro -->
+  <!-- Intro Section -->
   <section class="intro">
     <img src="https://via.placeholder.com/180" alt="Profile Picture">
     <div class="typewriter">My name is Shaurya Raghuvanshi</div>
     <div class="typewriter2">Welcome to my portfolio</div>
   </section>
 
-  <!-- Content -->
+  <!-- Content Sections -->
   <section id="about">
     <h2>About</h2>
     <p>I’m passionate about computers and technology.</p>
@@ -265,7 +262,7 @@
         document.getElementById("theme-toggle").checked = savedTheme === "dark";
       }
 
-      // Scroll to about after 6 seconds
+      // Scroll to About section after delay
       setTimeout(() => {
         document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
       }, 6000);
