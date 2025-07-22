@@ -6,7 +6,6 @@
   <title>Shaurya Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* ===== Variables ===== */
     :root {
       --bg: #f4f4f4;
       --text: #333;
@@ -36,7 +35,6 @@
       --terminal-glow: #00ff00;
     }
 
-    /* ===== Base ===== */
     html {
       scroll-behavior: smooth;
       background: var(--bg);
@@ -51,7 +49,6 @@
       color: var(--text);
     }
 
-    /* ===== Hacker Grid Background for Dark Mode ===== */
     body::before {
       content: "";
       position: fixed;
@@ -71,7 +68,6 @@
       background-image: none;
     }
 
-    /* ===== Floating Blobs ===== */
     body::after {
       content: "";
       position: fixed;
@@ -94,7 +90,6 @@
       opacity: 0.05;
     }
 
-    /* ===== Top Bar ===== */
     .top-bar {
       background-color: var(--topbar-bg);
       position: sticky;
@@ -125,7 +120,6 @@
       color: var(--topbar-hover);
     }
 
-    /* ===== Theme Toggle Switch ===== */
     label.theme-switch {
       display: flex;
       align-items: center;
@@ -159,31 +153,42 @@
       opacity: 0.3;
     }
 
-    /* ===== Header with Typed Text ===== */
     header {
       background: var(--header-bg);
       color: var(--header-text);
       text-align: center;
-      padding: 60px 20px 80px;
+      padding: 60px 20px 100px;
       font-family: 'Courier New', Courier, monospace;
       position: relative;
       overflow: visible;
     }
-    header p#typed-name {
-      font-size: 1.9rem;
+    #typed-intro, #typed-welcome {
+      font-size: 1.7rem;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       white-space: nowrap;
       user-select: none;
       border-right: 3px solid var(--terminal-glow);
       padding-right: 5px;
       overflow: hidden;
-      max-width: 100%;
-      margin: 0 auto;
+      margin: 0 auto 20px;
       width: fit-content;
+      max-width: 100%;
+    }
+    #typed-welcome {
+      border-right: none; /* will add cursor via JS */
+      margin-top: 30px;
+    }
+    #name-highlight {
+      font-size: 2.3rem;
+      font-weight: 900;
+      margin-top: 0;
+      user-select: none;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 3px;
     }
 
-    /* ===== Sections ===== */
     section {
       padding: 50px 20px;
       max-width: 800px;
@@ -206,7 +211,6 @@
       user-select: none;
     }
 
-    /* ===== Links styling ===== */
     .links a {
       margin-right: 15px;
       color: var(--accent);
@@ -218,7 +222,6 @@
       color: var(--topbar-hover);
     }
 
-    /* ===== Footer ===== */
     footer {
       background: var(--footer-bg);
       color: var(--footer-text);
@@ -228,7 +231,6 @@
       user-select: none;
     }
 
-    /* ===== Responsive ===== */
     @media (max-width: 700px) {
       .top-bar {
         flex-direction: column;
@@ -239,6 +241,10 @@
       }
       label.theme-switch {
         margin-top: 10px;
+      }
+      #name-highlight {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
       }
     }
   </style>
@@ -265,9 +271,11 @@
     </label>
   </div>
 
-  <!-- Header -->
+  <!-- Header with Typed Intro -->
   <header>
-    <p id="typed-name"></p>
+    <p id="typed-intro"></p>
+    <h1 id="name-highlight">Shaurya Raghuvanshi</h1>
+    <p id="typed-welcome"></p>
   </header>
 
   <!-- Sections -->
@@ -310,13 +318,11 @@
     &copy; 2025 Shaurya Raghuvanshi
   </footer>
 
-  <!-- Script -->
   <script>
     // Theme toggle
     const toggle = document.getElementById("theme-toggle");
     const html = document.documentElement;
 
-    // Initialize toggle based on saved theme
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       html.setAttribute("data-theme", savedTheme);
@@ -344,32 +350,51 @@
       observer.observe(section);
     });
 
-    // Typed letter-by-letter animation for header name
-    const typedNameEl = document.getElementById("typed-name");
-    const nameText = "Shaurya Raghuvanshi";
-    let index = 0;
+    // Typed intro animation
+    const typedIntroEl = document.getElementById("typed-intro");
+    const typedWelcomeEl = document.getElementById("typed-welcome");
+    const introText = "My name is Shaurya Raghuvanshi";
+    const welcomeText = "Welcome to my portfolio";
+    let introIndex = 0;
+    let welcomeIndex = 0;
 
-    function typeLetter() {
-      if (index <= nameText.length) {
-        typedNameEl.textContent = nameText.slice(0, index);
-        index++;
-        setTimeout(typeLetter, 150); // typing speed in ms per letter
+    function typeIntro() {
+      if (introIndex <= introText.length) {
+        typedIntroEl.textContent = introText.slice(0, introIndex);
+        introIndex++;
+        setTimeout(typeIntro, 120);
       } else {
-        blinkCursor();
+        // Remove cursor after intro finished
+        typedIntroEl.style.borderRight = "none";
+        setTimeout(typeWelcome, 800);
       }
     }
 
-    function blinkCursor() {
+    function typeWelcome() {
+      // add cursor border to welcome
+      typedWelcomeEl.style.borderRight = "3px solid var(--terminal-glow)";
+      if (welcomeIndex <= welcomeText.length) {
+        typedWelcomeEl.textContent = welcomeText.slice(0, welcomeIndex);
+        welcomeIndex++;
+        setTimeout(typeWelcome, 120);
+      } else {
+        blinkCursorWelcome();
+      }
+    }
+
+    function blinkCursorWelcome() {
       let visible = true;
       setInterval(() => {
-        typedNameEl.style.borderRight = visible ? "none" : "3px solid var(--terminal-glow)";
+        typedWelcomeEl.style.borderRight = visible ? "none" : "3px solid var(--terminal-glow)";
         visible = !visible;
       }, 600);
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      typedNameEl.textContent = "";
-      typeLetter();
+      typedIntroEl.textContent = "";
+      typedIntroEl.style.borderRight = "3px solid var(--terminal-glow)";
+      typedWelcomeEl.textContent = "";
+      typeIntro();
     });
   </script>
 </body>
