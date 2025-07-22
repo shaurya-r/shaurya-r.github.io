@@ -9,30 +9,30 @@
     :root {
       --bg: #f4f4f4;
       --text: #333;
-      --accent: #007acc;
+      --accent: #E48226; /* Updated accent */
       --header-bg: #222;
       --header-text: #fff;
       --topbar-bg: #111;
       --topbar-link: #fff;
-      --topbar-hover: #00aaff;
+      --topbar-hover: #E48226; /* Updated hover */
       --footer-bg: #222;
       --footer-text: #aaa;
-      --grid-color: rgba(0, 255, 0, 0.07);
-      --terminal-glow: #00ff00;
+      --grid-color: rgba(228, 130, 38, 0.07);
+      --terminal-glow: #E48226; /* Updated glow */
     }
     [data-theme="dark"] {
       --bg: #0b0b0b;
       --text: #eee;
-      --accent: #4da3ff;
+      --accent: #E48226; /* Updated accent */
       --header-bg: #1e1e1e;
-      --header-text: #00ff00;
+      --header-text: #E48226;
       --topbar-bg: #000;
-      --topbar-link: #0f0;
-      --topbar-hover: #0f0;
+      --topbar-link: #E48226;
+      --topbar-hover: #ff9f4d;
       --footer-bg: #000;
-      --footer-text: #077;
-      --grid-color: rgba(0, 255, 100, 0.15);
-      --terminal-glow: #00ff00;
+      --footer-text: #774b27;
+      --grid-color: rgba(228, 130, 38, 0.15);
+      --terminal-glow: #E48226;
     }
 
     html {
@@ -350,7 +350,6 @@
         introIndex++;
         setTimeout(typeIntro, 120);
       } else {
-        // Remove cursor after intro finished
         typedIntroEl.style.borderRight = "none";
         setTimeout(typeWelcome, 800);
       }
