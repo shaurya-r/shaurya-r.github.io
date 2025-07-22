@@ -2,10 +2,11 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shaurya Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* ===== Variables ===== */
     :root {
       --bg: #f4f4f4;
       --text: #333;
@@ -18,49 +19,59 @@
       --footer-bg: #222;
       --footer-text: #aaa;
       --grid-color: rgba(0, 255, 0, 0.07);
+      --terminal-glow: #00ff00;
     }
-
     [data-theme="dark"] {
       --bg: #0b0b0b;
       --text: #eee;
       --accent: #4da3ff;
       --header-bg: #1e1e1e;
-      --header-text: #fff;
+      --header-text: #00ff00;
       --topbar-bg: #000;
-      --topbar-link: #fff;
-      --topbar-hover: #00ccff;
+      --topbar-link: #0f0;
+      --topbar-hover: #0f0;
       --footer-bg: #000;
-      --footer-text: #777;
-      --grid-color: rgba(0, 255, 100, 0.08);
+      --footer-text: #077;
+      --grid-color: rgba(0, 255, 100, 0.15);
+      --terminal-glow: #00ff00;
     }
 
+    /* ===== Base ===== */
     html {
       scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
     }
-
     body {
       margin: 0;
-      font-family: 'Space Grotesk', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
       position: relative;
       overflow-x: hidden;
+      background-color: var(--bg);
+      color: var(--text);
     }
 
-    /* Hacker grid background */
+    /* ===== Hacker Grid Background for Dark Mode ===== */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background-image: linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
       background-size: 30px 30px;
       z-index: -2;
+      pointer-events: none;
+    }
+    [data-theme="dark"] body::before {
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    }
+    [data-theme="light"] body::before {
+      background-image: none;
     }
 
-    /* Floating blobs */
+    /* ===== Floating Blobs ===== */
     body::after {
       content: "";
       position: fixed;
@@ -70,18 +81,20 @@
       top: -150px;
       left: -150px;
       border-radius: 50%;
-      filter: blur(100px);
+      filter: blur(120px);
       opacity: 0.15;
       z-index: -1;
       animation: float 25s ease-in-out infinite;
     }
-
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(50px); }
     }
+    [data-theme="light"] body::after {
+      opacity: 0.05;
+    }
 
-    /* Top Bar */
+    /* ===== Top Bar ===== */
     .top-bar {
       background-color: var(--topbar-bg);
       position: sticky;
@@ -92,72 +105,90 @@
       align-items: center;
       padding: 15px 30px;
       flex-wrap: wrap;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
-
     .top-bar .name {
       color: var(--topbar-link);
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 600;
+      user-select: none;
     }
-
     .top-bar nav a {
       color: var(--topbar-link);
       text-decoration: none;
       margin-left: 20px;
       font-weight: 600;
       transition: color 0.3s ease;
+      user-select: none;
     }
-
     .top-bar nav a:hover {
       color: var(--topbar-hover);
     }
 
-    /* Theme Toggle */
+    /* ===== Theme Toggle Switch ===== */
     label.theme-switch {
       display: flex;
       align-items: center;
       cursor: pointer;
       margin-left: 20px;
+      user-select: none;
     }
-
     .theme-switch input {
       display: none;
     }
-
     .slider {
       display: flex;
       align-items: center;
-      padding: 5px 10px;
-      border: 1px solid var(--topbar-link);
+      padding: 5px 12px;
+      border: 1.5px solid var(--topbar-link);
       border-radius: 20px;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      color: var(--topbar-link);
+      transition: color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
     }
-
     .icon {
-      margin: 0 5px;
+      margin: 0 6px;
       transition: opacity 0.3s ease;
+      user-select: none;
     }
-
     input[type="checkbox"]:checked ~ .slider .sun {
-      opacity: 0.2;
+      opacity: 0.3;
     }
-
     input[type="checkbox"]:not(:checked) ~ .slider .moon {
-      opacity: 0.2;
+      opacity: 0.3;
     }
 
+    /* ===== Header with Terminal Style Text ===== */
     header {
       background: var(--header-bg);
       color: var(--header-text);
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 60px 20px 80px;
+      font-family: 'Courier New', Courier, monospace;
+      position: relative;
+      overflow: visible;
     }
-
     header p {
-      font-size: 1.6rem;
-      margin-top: 0;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 0 auto;
+      max-width: 600px;
+      white-space: nowrap;
+      border-right: 3px solid var(--terminal-glow);
+      animation: typing 3s steps(28) 1 forwards, blink 0.8s step-end infinite;
+      user-select: none;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
     }
 
+    /* ===== Sections ===== */
     section {
       padding: 50px 20px;
       max-width: 800px;
@@ -165,45 +196,53 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.6s ease-out;
+      background: var(--bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-
     section.show {
       opacity: 1;
       transform: translateY(0);
     }
-
     h2 {
       color: var(--text);
       margin-top: 0;
       font-weight: 600;
+      user-select: none;
     }
 
+    /* ===== Links styling ===== */
     .links a {
       margin-right: 15px;
       color: var(--accent);
       text-decoration: none;
       font-weight: 600;
+      user-select: none;
+    }
+    .links a:hover {
+      color: var(--topbar-hover);
     }
 
+    /* ===== Footer ===== */
     footer {
       background: var(--footer-bg);
       color: var(--footer-text);
       text-align: center;
       padding: 20px;
       font-size: 0.9rem;
+      user-select: none;
     }
 
+    /* ===== Responsive ===== */
     @media (max-width: 700px) {
       .top-bar {
         flex-direction: column;
         align-items: flex-start;
       }
-
       .top-bar nav a {
         margin: 10px 10px 0 0;
       }
-
-      .theme-toggle {
+      label.theme-switch {
         margin-top: 10px;
       }
     }
@@ -222,8 +261,8 @@
       <a href="#personality">Personality</a>
       <a href="#links">Links</a>
     </nav>
-    <label class="theme-switch">
-      <input type="checkbox" id="theme-toggle">
+    <label class="theme-switch" title="Toggle Dark/Light Mode">
+      <input type="checkbox" id="theme-toggle" aria-label="Toggle theme" />
       <div class="slider">
         <span class="icon sun">☀️</span>
         <span class="icon moon">🌙</span>
@@ -249,7 +288,7 @@
 
   <section id="community">
     <h2>Community Work</h2>
-    <p>List any volunteering, outreach, or educational contributions. </p>
+    <p>List any volunteering, outreach, or educational contributions.</p>
   </section>
 
   <section id="experience">
@@ -265,8 +304,8 @@
   <section id="links">
     <h2>Links</h2>
     <div class="links">
-      <a href="https://github.com/shaurya-r" target="_blank">GitHub</a>
-      <a href="https://linkedin.com/in/shauryar" target="_blank">LinkedIn</a>
+      <a href="https://github.com/shaurya-r" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://linkedin.com/in/shauryar" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="mailto:Shaurya.raghuvanshi.3926@gmail.com">Email</a>
     </div>
   </section>
@@ -276,16 +315,25 @@
     &copy; 2025 Shaurya Raghuvanshi
   </footer>
 
-  <!-- Script for Theme -->
+  <!-- Script -->
   <script>
     const toggle = document.getElementById("theme-toggle");
     const html = document.documentElement;
 
+    // Initialize toggle based on saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      html.setAttribute("data-theme", savedTheme);
+      toggle.checked = savedTheme === "dark";
+    }
+
     toggle.addEventListener("change", () => {
-      html.setAttribute("data-theme", toggle.checked ? "dark" : "light");
+      const newTheme = toggle.checked ? "dark" : "light";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
     });
 
-    // Optional: Scroll animation
+    // Scroll reveal using IntersectionObserver
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -294,9 +342,8 @@
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-
     document.querySelectorAll("section").forEach(section => {
       observer.observe(section);
     });
