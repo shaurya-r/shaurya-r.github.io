@@ -57,12 +57,35 @@
       flex-wrap: wrap;
     }
 
+    .top-bar .title {
+      font-size: 2rem;
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent);
+      animation: glow 1.5s infinite alternate;
+      cursor: pointer;
+      transition: transform 0.2s, text-shadow 0.2s;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent);
+      }
+      to {
+        text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
+      }
+    }
+
+    .top-bar nav {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
     .top-bar nav a {
       color: var(--topbar-link);
       text-decoration: none;
-      margin-left: 20px;
+      margin: 0 15px;
       font-weight: bold;
-      position: relative;
       transition: color 0.3s ease;
     }
 
@@ -71,12 +94,19 @@
     }
 
     .theme-switch {
-      margin-left: auto;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: var(--topbar-link);
     }
 
     .theme-switch input {
       display: none;
+    }
+
+    .theme-label {
+      margin-left: 5px;
+      font-weight: bold;
     }
 
     /* Intro */
@@ -143,6 +173,11 @@
         align-items: flex-start;
       }
 
+      .top-bar nav {
+        justify-content: center;
+        width: 100%;
+      }
+
       .top-bar nav a {
         margin: 10px 10px 0 0;
       }
@@ -153,7 +188,7 @@
 
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="name"><a href="#home" style="color: var(--topbar-link); text-decoration: none;">Shaurya's Portfolio</a></div>
+    <div class="title" id="portfolio-title">Portfolio</div>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -164,10 +199,7 @@
     </nav>
     <label class="theme-switch">
       <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" />
-      <span class="slider">
-        <span class="sun">☀️</span>
-        <span class="moon">🌙</span>
-      </span>
+      <span class="theme-label" id="theme-label">Dark</span>
     </label>
   </div>
 
@@ -253,11 +285,21 @@
       typeLine();
     });
 
+    document.getElementById("portfolio-title").addEventListener("click", function() {
+      this.style.transform = "scale(0.9)";
+      this.style.textShadow = "0 0 15px #ffcc00, 0 0 30px #ffcc00, 0 0 45px #ffcc00"; // Change glow color on click
+      setTimeout(() => {
+        this.style.transform = "scale(1)";
+        this.style.textShadow = "0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent)"; // Reset glow color
+      }, 200);
+    });
+
     function toggleTheme() {
       const html = document.documentElement;
       const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
       html.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
+      document.getElementById("theme-label").textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
     }
 
     // Load theme on startup
@@ -265,6 +307,7 @@
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) {
         document.documentElement.setAttribute("data-theme", savedTheme);
+        document.getElementById("theme-label").textContent = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
       }
     });
   </script>
